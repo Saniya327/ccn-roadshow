@@ -34,7 +34,7 @@ spec:
       - env:
         - name: JAVA_OPTS_APPEND
           value: -Dspring.profiles.active=openshift
-        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/catalog@sha256:88fd8cfe8bacbd0ebeadaef157cf2b8cff8ccaaecc85fd5bb3cf609090cefe00
+        image: quay.io/jchraibi/catalog-coolstore:latest
         imagePullPolicy: Always
         name: catalog
         ports:
