@@ -4,6 +4,9 @@ The 'image' values need to be changed to valid images, as the rhpds environment 
 The metadata such as 'uid', 'creationtime', 'resourceVersion', 'clusterIPs' etc need to be deleted so that it they can be deployed on any cluster.
 
 To deploy:
+Ensure the operators mentioned in the [this](https://docs.google.com/document/d/1EVkpTNgUjsVa6XBPS9AWzVTV7P6yM3G-wrwQguEbRV8/edit#heading=h.aghcg68r65mh) document are installed on the cluster
+
+
 Use ACM and create a new application.
 Provide the url and branch and click on save. 
 
