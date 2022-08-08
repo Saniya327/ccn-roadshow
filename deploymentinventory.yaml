@@ -46,7 +46,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
+        image: quay.io/jchraibi/inventory-coolstore:latest
         imagePullPolicy: Always
         name: inventory
         ports:
@@ -71,5 +71,4 @@ spec:
         kind: ImageStreamTag
         name: inventory:1.0-SNAPSHOT
         namespace: user3-cloudnativeapps
-      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
     type: ImageChange
