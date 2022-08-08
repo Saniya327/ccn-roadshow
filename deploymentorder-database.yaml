@@ -1,0 +1,102 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2022-08-04T20:38:38Z"
+  generation: 2
+  labels:
+    app: order-database
+    app.kubernetes.io/component: order-database
+    app.kubernetes.io/instance: order-database
+    app.kubernetes.io/part-of: order
+    app.openshift.io/runtime: mongodb
+  name: order-database
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2317181"
+  uid: 2a6b1d46-dfaa-4877-a41e-af1a3d4f4389
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: order-database
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deploymentconfig: order-database
+    spec:
+      containers:
+      - image: quay.io/openshiftlabs/ccn-mongo@sha256:c48b962e98b5b4e20adb7cb7a760ce4a53ee4f85dbdce8ad19c7741c89bd8e0b
+        imagePullPolicy: IfNotPresent
+        name: order-database
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/configdb
+          name: order-database-volume-1
+        - mountPath: /data/db
+          name: order-database-volume-2
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: order-database-volume-1
+      - emptyDir: {}
+        name: order-database-volume-2
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - order-database
+      from:
+        kind: ImageStreamTag
+        name: order-database:4.0
+        namespace: user3-cloudnativeapps
+      lastTriggeredImage: quay.io/openshiftlabs/ccn-mongo@sha256:c48b962e98b5b4e20adb7cb7a760ce4a53ee4f85dbdce8ad19c7741c89bd8e0b
+    type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-08-04T20:38:44Z"
+    lastUpdateTime: "2022-08-04T20:38:44Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-08-04T20:38:41Z"
+    lastUpdateTime: "2022-08-04T20:38:45Z"
+    message: replication controller "order-database-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

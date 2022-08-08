@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2022-08-04T20:36:45Z"
+  labels:
+    app: catalog-database
+    app.kubernetes.io/component: catalog-database
+    app.kubernetes.io/instance: catalog-database
+  name: catalog-database
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2304964"
+  uid: 0c57491e-cf1b-4bbc-8d4b-bdb3c60a77b5
+spec:
+  clusterIP: 172.30.15.43
+  clusterIPs:
+  - 172.30.15.43
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 5432-tcp
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    deploymentconfig: catalog-database
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

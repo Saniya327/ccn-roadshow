@@ -1,0 +1,36 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    app.openshift.io/vcs-url: <<unknown>>
+    app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
+    app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
+    openshift.io/host.generated: "true"
+  creationTimestamp: "2022-08-04T20:36:27Z"
+  labels:
+    app.kubernetes.io/name: inventory
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.openshift.io/runtime: quarkus
+  name: inventory
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2304090"
+  uid: c347733e-60c1-423f-8a5d-bff10ecc7fd2
+spec:
+  host: inventory-user3-cloudnativeapps.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: inventory
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: "2022-08-04T20:36:27Z"
+      status: "True"
+      type: Admitted
+    host: inventory-user3-cloudnativeapps.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+    routerCanonicalHostname: router-default.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+    routerName: default
+    wildcardPolicy: None

@@ -1,0 +1,36 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    app.openshift.io/vcs-url: <<unknown>>
+    app.quarkus.io/build-timestamp: 2022-08-04 - 21:30:59 +0000
+    app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
+    openshift.io/host.generated: "true"
+  creationTimestamp: "2022-08-04T21:32:07Z"
+  labels:
+    app.kubernetes.io/name: payment
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.openshift.io/runtime: quarkus
+  name: payment
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2462592"
+  uid: e12a2239-ef6b-4709-ab88-b5148703ebf1
+spec:
+  host: payment-user3-cloudnativeapps.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: payment
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: "2022-08-04T21:32:07Z"
+      status: "True"
+      type: Admitted
+    host: payment-user3-cloudnativeapps.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+    routerCanonicalHostname: router-default.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+    routerName: default
+    wildcardPolicy: None

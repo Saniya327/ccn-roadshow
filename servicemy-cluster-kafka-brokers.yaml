@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  creationTimestamp: "2022-08-04T20:56:02Z"
+  labels:
+    app.kubernetes.io/instance: my-cluster
+    app.kubernetes.io/managed-by: strimzi-cluster-operator
+    app.kubernetes.io/name: kafka
+    app.kubernetes.io/part-of: strimzi-my-cluster
+    strimzi.io/cluster: my-cluster
+    strimzi.io/kind: Kafka
+    strimzi.io/name: my-cluster-kafka
+  name: my-cluster-kafka-brokers
+  namespace: user3-cloudnativeapps
+  ownerReferences:
+  - apiVersion: kafka.strimzi.io/v1beta2
+    blockOwnerDeletion: false
+    controller: false
+    kind: Kafka
+    name: my-cluster
+    uid: 77fd94c9-b45a-4b7e-9712-19e5aa26b763
+  resourceVersion: "2360539"
+  uid: c2effab0-81a8-4c7e-bc07-411aeeb0c29e
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: tcp-ctrlplane
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  - name: tcp-replication
+    port: 9091
+    protocol: TCP
+    targetPort: 9091
+  - name: tcp-clients
+    port: 9092
+    protocol: TCP
+    targetPort: 9092
+  - name: tcp-clientstls
+    port: 9093
+    protocol: TCP
+    targetPort: 9093
+  publishNotReadyAddresses: true
+  selector:
+    strimzi.io/cluster: my-cluster
+    strimzi.io/kind: Kafka
+    strimzi.io/name: my-cluster-kafka
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

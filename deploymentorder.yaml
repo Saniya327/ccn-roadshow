@@ -1,0 +1,109 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    app.openshift.io/connects-to: my-cluster,order-database
+    app.openshift.io/vcs-url: <<unknown>>
+    app.quarkus.io/build-timestamp: 2022-08-04 - 21:32:34 +0000
+    app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
+  creationTimestamp: "2022-08-04T20:40:44Z"
+  generation: 8
+  labels:
+    app.kubernetes.io/name: order
+    app.kubernetes.io/part-of: order
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.openshift.io/runtime: quarkus
+  name: order
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2468285"
+  uid: b109d246-0ac2-4608-b5e6-6b53a70e7577
+spec:
+  replicas: 1
+  selector:
+    app.kubernetes.io/name: order
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        app.openshift.io/vcs-url: <<unknown>>
+        app.quarkus.io/build-timestamp: 2022-08-04 - 21:32:34 +0000
+        app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: order
+        app.kubernetes.io/version: 1.0-SNAPSHOT
+        app.openshift.io/runtime: quarkus
+      namespace: user3-cloudnativeapps
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/order@sha256:5ee8a18b424d44b1e26ba90a72cdd18450621cb613170b11aae23ed5453be1e3
+        imagePullPolicy: IfNotPresent
+        name: order
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - order
+      from:
+        kind: ImageStreamTag
+        name: order:1.0-SNAPSHOT
+        namespace: user3-cloudnativeapps
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/order@sha256:5ee8a18b424d44b1e26ba90a72cdd18450621cb613170b11aae23ed5453be1e3
+    type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-08-04T20:57:18Z"
+    lastUpdateTime: "2022-08-04T20:57:18Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-08-04T21:34:00Z"
+    lastUpdateTime: "2022-08-04T21:34:03Z"
+    message: replication controller "order-5" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  details:
+    causes:
+    - imageTrigger:
+        from:
+          kind: DockerImage
+          name: jboss/order:1.0-SNAPSHOT
+      type: ImageChange
+    message: image change
+  latestVersion: 5
+  observedGeneration: 8
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

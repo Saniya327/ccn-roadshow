@@ -1,0 +1,109 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2022-08-04T20:37:59Z"
+  generation: 2
+  labels:
+    app: datagrid-service
+    app.kubernetes.io/component: datagrid-service
+    app.kubernetes.io/instance: datagrid-service
+    app.kubernetes.io/part-of: cart
+    app.openshift.io/runtime: datagrid
+  name: datagrid-service
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2395830"
+  uid: 2542baad-f5e2-49e6-bbaf-a2a6fe2939cb
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: datagrid-service
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deploymentconfig: datagrid-service
+    spec:
+      containers:
+      - env:
+        - name: PASS
+          value: pass
+        - name: USER
+          value: user
+        image: quay.io/openshiftlabs/ccn-infinispan@sha256:3090e8aaf031c69e48285515fb44e320fe8bfd9a999ee1ff3d3818b8ca71e9c9
+        imagePullPolicy: IfNotPresent
+        name: datagrid-service
+        ports:
+        - containerPort: 11221
+          protocol: TCP
+        - containerPort: 11222
+          protocol: TCP
+        - containerPort: 2157
+          protocol: TCP
+        - containerPort: 46655
+          protocol: TCP
+        - containerPort: 57600
+          protocol: TCP
+        - containerPort: 7800
+          protocol: TCP
+        - containerPort: 7900
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - datagrid-service
+      from:
+        kind: ImageStreamTag
+        name: datagrid-service:12.0.0.Final-1
+        namespace: user3-cloudnativeapps
+      lastTriggeredImage: quay.io/openshiftlabs/ccn-infinispan@sha256:3090e8aaf031c69e48285515fb44e320fe8bfd9a999ee1ff3d3818b8ca71e9c9
+    type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-08-04T20:38:05Z"
+    lastUpdateTime: "2022-08-04T20:38:05Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-08-04T20:38:02Z"
+    lastUpdateTime: "2022-08-04T20:38:06Z"
+    message: replication controller "datagrid-service-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1
