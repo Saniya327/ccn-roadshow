@@ -1,12 +1,6 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  annotations:
-    app.openshift.io/connects-to: inventory-database
-    app.openshift.io/vcs-ref: ocp-4.7
-    app.openshift.io/vcs-url: <<unknown>>
-    app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
-    app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
   generation: 2
   labels:
     app.kubernetes.io/name: inventory
