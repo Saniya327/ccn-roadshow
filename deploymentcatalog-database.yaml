@@ -1,0 +1,72 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  generation: 2
+  labels:
+    app: catalog-database
+    app.kubernetes.io/component: catalog-database
+    app.kubernetes.io/instance: catalog-database
+    app.kubernetes.io/part-of: catalog
+    app.openshift.io/runtime: postgresql
+  name: catalog-database
+  namespace: user3-cloudnativeapps
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: catalog-database
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deploymentconfig: catalog-database
+    spec:
+      containers:
+      - env:
+        - name: POSTGRESQL_DATABASE
+          value: catalog
+        - name: POSTGRESQL_PASSWORD
+          value: mysecretpassword
+        - name: POSTGRESQL_USER
+          value: catalog
+        image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:32f1d6b012ed6c5163a390ba7ff66e01894004674b727744760ffb68bb044d74
+        imagePullPolicy: Always
+        name: postgresql
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - postgresql
+      from:
+        kind: ImageStreamTag
+        name: postgresql:latest
+        namespace: openshift
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:32f1d6b012ed6c5163a390ba7ff66e01894004674b727744760ffb68bb044d74
+    type: ImageChange
