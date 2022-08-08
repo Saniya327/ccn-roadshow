@@ -1,6 +1,12 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
+  annotations:
+    app.openshift.io/connects-to: inventory-database
+    app.openshift.io/vcs-ref: ocp-4.7
+    app.openshift.io/vcs-url: <<unknown>>
+    app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
+    app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
   generation: 2
   labels:
     app.kubernetes.io/name: inventory
@@ -27,7 +33,7 @@ spec:
     type: Rolling
   template:
     metadata:
-     creationTimestamp: null
+      creationTimestamp: null
       labels:
         app.kubernetes.io/name: inventory
         app.kubernetes.io/version: 1.0-SNAPSHOT
@@ -40,7 +46,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: quay.io/jchraibi/inventory-coolstore:latest
+        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
         imagePullPolicy: Always
         name: inventory
         ports:
@@ -55,3 +61,15 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - inventory
+      from:
+        kind: ImageStreamTag
+        name: inventory:1.0-SNAPSHOT
+        namespace: user3-cloudnativeapps
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
+    type: ImageChange
