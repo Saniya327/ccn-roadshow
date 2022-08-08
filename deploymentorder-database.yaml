@@ -59,10 +59,9 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - emptyDir: {}
+      - persistentVolumeClaim:
+          claimName: order-pv-claim
         name: order-database-volume-1
-      - emptyDir: {}
-        name: order-database-volume-2
   test: false
   triggers:
   - type: ConfigChange
