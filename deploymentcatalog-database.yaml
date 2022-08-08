@@ -3,6 +3,7 @@ kind: DeploymentConfig
 metadata:
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2022-08-04T20:36:45Z"
   generation: 2
   labels:
     app: catalog-database
@@ -12,6 +13,8 @@ metadata:
     app.openshift.io/runtime: postgresql
   name: catalog-database
   namespace: user3-cloudnativeapps
+  resourceVersion: "2685950"
+  uid: 1ef0f504-6015-421b-b693-f697ffa08062
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -70,3 +73,27 @@ spec:
         namespace: openshift
       lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:32f1d6b012ed6c5163a390ba7ff66e01894004674b727744760ffb68bb044d74
     type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-08-04T20:36:49Z"
+    lastUpdateTime: "2022-08-04T20:36:52Z"
+    message: replication controller "catalog-database-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2022-08-05T19:02:25Z"
+    lastUpdateTime: "2022-08-05T19:02:25Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

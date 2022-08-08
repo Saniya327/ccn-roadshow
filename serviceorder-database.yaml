@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2022-08-04T20:38:38Z"
+  labels:
+    app: order-database
+    app.kubernetes.io/component: order-database
+    app.kubernetes.io/instance: order-database
+  name: order-database
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2310478"
+  uid: 8ae578b7-e968-48db-ae43-e33d789f6125
+spec:
+  clusterIP: 172.30.168.90
+  clusterIPs:
+  - 172.30.168.90
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 27017-tcp
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    deploymentconfig: order-database
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

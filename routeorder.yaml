@@ -1,0 +1,35 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    app.openshift.io/vcs-url: <<unknown>>
+    app.quarkus.io/build-timestamp: 2022-08-04 - 21:32:34 +0000
+    app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
+  creationTimestamp: "2022-08-04T20:40:44Z"
+  labels:
+    app.kubernetes.io/name: order
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.openshift.io/runtime: quarkus
+  name: order
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2467245"
+  uid: 0461eb82-43eb-4d5d-afc6-416526c1e32c
+spec:
+  host: order-user3-cloudnativeapps.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: order
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: "2022-08-04T20:40:44Z"
+      status: "True"
+      type: Admitted
+    host: order-user3-cloudnativeapps.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+    routerCanonicalHostname: router-default.apps.cluster-pjm25.pjm25.sandbox45.opentlc.com
+    routerName: default
+    wildcardPolicy: None

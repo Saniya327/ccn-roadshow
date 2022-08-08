@@ -2,27 +2,27 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   annotations:
-    app.openshift.io/connects-to: inventory-database
-    app.openshift.io/vcs-ref: ocp-4.7
+    app.openshift.io/connects-to: my-cluster
+    app.openshift.io/vcs-ref: ocp-4.10
     app.openshift.io/vcs-url: <<unknown>>
-    app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
-    app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
-  creationTimestamp: "2022-08-04T20:36:27Z"
+    app.quarkus.io/build-timestamp: 2022-08-04 - 21:30:59 +0000
+    app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
+  creationTimestamp: "2022-08-04T21:32:07Z"
   generation: 2
   labels:
-    app.kubernetes.io/name: inventory
-    app.kubernetes.io/part-of: inventory
+    app.kubernetes.io/name: payment
+    app.kubernetes.io/part-of: payment
     app.kubernetes.io/version: 1.0-SNAPSHOT
     app.openshift.io/runtime: quarkus
-  name: inventory
+  name: payment
   namespace: user3-cloudnativeapps
-  resourceVersion: "3968345"
-  uid: 5f739b68-2a8b-498a-887f-b358036dc458
+  resourceVersion: "2685018"
+  uid: b05286c4-eef7-4803-8679-735ea18df59e
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
-    app.kubernetes.io/name: inventory
+    app.kubernetes.io/name: payment
     app.kubernetes.io/version: 1.0-SNAPSHOT
   strategy:
     activeDeadlineSeconds: 21600
@@ -38,13 +38,14 @@ spec:
     metadata:
       annotations:
         app.openshift.io/vcs-url: <<unknown>>
-        app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
-        app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
+        app.quarkus.io/build-timestamp: 2022-08-04 - 21:30:59 +0000
+        app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
       creationTimestamp: null
       labels:
-        app.kubernetes.io/name: inventory
+        app.kubernetes.io/name: payment
         app.kubernetes.io/version: 1.0-SNAPSHOT
         app.openshift.io/runtime: quarkus
+      namespace: user3-cloudnativeapps
     spec:
       containers:
       - env:
@@ -53,9 +54,9 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
-        imagePullPolicy: Always
-        name: inventory
+        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/payment@sha256:f7939f88fcdf10cc1967e4745b8320cfd571d427f149aa9dce013685e1471583
+        imagePullPolicy: IfNotPresent
+        name: payment
         ports:
         - containerPort: 8080
           name: http
@@ -73,24 +74,24 @@ spec:
   - imageChangeParams:
       automatic: true
       containerNames:
-      - inventory
+      - payment
       from:
         kind: ImageStreamTag
-        name: inventory:1.0-SNAPSHOT
+        name: payment:1.0-SNAPSHOT
         namespace: user3-cloudnativeapps
-      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/payment@sha256:f7939f88fcdf10cc1967e4745b8320cfd571d427f149aa9dce013685e1471583
     type: ImageChange
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2022-08-04T20:36:32Z"
-    lastUpdateTime: "2022-08-04T20:36:43Z"
-    message: replication controller "inventory-1" successfully rolled out
+  - lastTransitionTime: "2022-08-04T21:32:11Z"
+    lastUpdateTime: "2022-08-04T21:32:21Z"
+    message: replication controller "payment-1" successfully rolled out
     reason: NewReplicationControllerAvailable
     status: "True"
     type: Progressing
-  - lastTransitionTime: "2022-08-08T14:24:30Z"
-    lastUpdateTime: "2022-08-08T14:24:30Z"
+  - lastTransitionTime: "2022-08-05T19:02:13Z"
+    lastUpdateTime: "2022-08-05T19:02:13Z"
     message: Deployment config has minimum availability.
     status: "True"
     type: Available

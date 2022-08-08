@@ -2,27 +2,25 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   annotations:
-    app.openshift.io/connects-to: inventory-database
-    app.openshift.io/vcs-ref: ocp-4.7
+    app.openshift.io/connects-to: my-cluster,order-database
     app.openshift.io/vcs-url: <<unknown>>
-    app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
-    app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
-  creationTimestamp: "2022-08-04T20:36:27Z"
-  generation: 2
+    app.quarkus.io/build-timestamp: 2022-08-04 - 21:32:34 +0000
+    app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
+  creationTimestamp: "2022-08-04T20:40:44Z"
+  generation: 8
   labels:
-    app.kubernetes.io/name: inventory
-    app.kubernetes.io/part-of: inventory
+    app.kubernetes.io/name: order
+    app.kubernetes.io/part-of: order
     app.kubernetes.io/version: 1.0-SNAPSHOT
     app.openshift.io/runtime: quarkus
-  name: inventory
+  name: order
   namespace: user3-cloudnativeapps
-  resourceVersion: "3968345"
-  uid: 5f739b68-2a8b-498a-887f-b358036dc458
+  resourceVersion: "2468285"
+  uid: b109d246-0ac2-4608-b5e6-6b53a70e7577
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
-    app.kubernetes.io/name: inventory
+    app.kubernetes.io/name: order
     app.kubernetes.io/version: 1.0-SNAPSHOT
   strategy:
     activeDeadlineSeconds: 21600
@@ -38,13 +36,14 @@ spec:
     metadata:
       annotations:
         app.openshift.io/vcs-url: <<unknown>>
-        app.quarkus.io/build-timestamp: 2022-08-04 - 20:35:01 +0000
-        app.quarkus.io/commit-id: 277cea07dc580f9ff3f0a40fb619c190eba657cf
+        app.quarkus.io/build-timestamp: 2022-08-04 - 21:32:34 +0000
+        app.quarkus.io/commit-id: bd1b49c6f063ef4072579378fa23566ed857dc74
       creationTimestamp: null
       labels:
-        app.kubernetes.io/name: inventory
+        app.kubernetes.io/name: order
         app.kubernetes.io/version: 1.0-SNAPSHOT
         app.openshift.io/runtime: quarkus
+      namespace: user3-cloudnativeapps
     spec:
       containers:
       - env:
@@ -53,9 +52,9 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
-        imagePullPolicy: Always
-        name: inventory
+        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/order@sha256:5ee8a18b424d44b1e26ba90a72cdd18450621cb613170b11aae23ed5453be1e3
+        imagePullPolicy: IfNotPresent
+        name: order
         ports:
         - containerPort: 8080
           name: http
@@ -73,33 +72,37 @@ spec:
   - imageChangeParams:
       automatic: true
       containerNames:
-      - inventory
+      - order
       from:
         kind: ImageStreamTag
-        name: inventory:1.0-SNAPSHOT
+        name: order:1.0-SNAPSHOT
         namespace: user3-cloudnativeapps
-      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/inventory@sha256:ccf3ef1ac62a70ae4138713b63108b6bc57d579efb799b04665b0bdfac17b098
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/order@sha256:5ee8a18b424d44b1e26ba90a72cdd18450621cb613170b11aae23ed5453be1e3
     type: ImageChange
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2022-08-04T20:36:32Z"
-    lastUpdateTime: "2022-08-04T20:36:43Z"
-    message: replication controller "inventory-1" successfully rolled out
-    reason: NewReplicationControllerAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2022-08-08T14:24:30Z"
-    lastUpdateTime: "2022-08-08T14:24:30Z"
+  - lastTransitionTime: "2022-08-04T20:57:18Z"
+    lastUpdateTime: "2022-08-04T20:57:18Z"
     message: Deployment config has minimum availability.
     status: "True"
     type: Available
+  - lastTransitionTime: "2022-08-04T21:34:00Z"
+    lastUpdateTime: "2022-08-04T21:34:03Z"
+    message: replication controller "order-5" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
   details:
     causes:
-    - type: ConfigChange
-    message: config change
-  latestVersion: 1
-  observedGeneration: 2
+    - imageTrigger:
+        from:
+          kind: DockerImage
+          name: jboss/order:1.0-SNAPSHOT
+      type: ImageChange
+    message: image change
+  latestVersion: 5
+  observedGeneration: 8
   readyReplicas: 1
   replicas: 1
   unavailableReplicas: 0

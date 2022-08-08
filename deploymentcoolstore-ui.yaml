@@ -1,0 +1,109 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    app.openshift.io/connects-to: order-cart,catalog,inventory,order
+    app.openshift.io/vcs-ref: ocp-4.10
+    app.openshift.io/vcs-uri: https://github.com/RedHat-Middleware-Workshops/cloud-native-workshop-v2m4-labs.git
+    nodeshift/git-branch: ocp-4.10
+    nodeshift/git-commit: bd1b49c6f063ef4072579378fa23566ed857dc74
+  creationTimestamp: "2022-08-04T21:22:34Z"
+  generation: 2
+  labels:
+    app: coolstore-ui
+    app.kubernetes.io/component: coolstore-ui
+    app.kubernetes.io/instance: coolstore-ui
+    app.kubernetes.io/name: nodejs
+    app.kubernetes.io/part-of: coolstore
+    app.openshift.io/runtime: nodejs
+    project: coolstore-ui
+    provider: nodeshift
+    version: 1.0.0
+  name: coolstore-ui
+  namespace: user3-cloudnativeapps
+  resourceVersion: "2685310"
+  uid: f401fa15-a4b2-4d4c-9976-a48062b118d8
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    app: coolstore-ui
+    project: coolstore-ui
+    provider: nodeshift
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        nodeshift/git-branch: ocp-4.10
+        nodeshift/git-commit: bd1b49c6f063ef4072579378fa23566ed857dc74
+      creationTimestamp: null
+      labels:
+        app: coolstore-ui
+        project: coolstore-ui
+        provider: nodeshift
+        version: 1.0.0
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/coolstore-ui@sha256:d0a0cd5ff77132e629faf27c92bebfb87571ec89c4f32e4e9052a5f9f7509b0c
+        imagePullPolicy: Always
+        name: coolstore-ui
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - coolstore-ui
+      from:
+        kind: ImageStreamTag
+        name: coolstore-ui:latest
+        namespace: user3-cloudnativeapps
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/coolstore-ui@sha256:d0a0cd5ff77132e629faf27c92bebfb87571ec89c4f32e4e9052a5f9f7509b0c
+    type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-08-04T21:22:38Z"
+    lastUpdateTime: "2022-08-04T21:22:51Z"
+    message: replication controller "coolstore-ui-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2022-08-05T19:02:16Z"
+    lastUpdateTime: "2022-08-05T19:02:16Z"
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

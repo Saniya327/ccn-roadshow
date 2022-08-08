@@ -2,27 +2,24 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   annotations:
-    app.openshift.io/connects-to: inventory,catalog-database
-    app.openshift.io/vcs-ref: ocp-4.7
-    app.openshift.io/vcs-uri: https://github.com/RedHat-Middleware-Workshops/cloud-native-workshop-v2m4-labs.git
     openshift.io/generated-by: OpenShiftNewApp
-  creationTimestamp: "2022-08-04T20:37:53Z"
+  creationTimestamp: "2022-08-04T20:37:59Z"
   generation: 2
   labels:
-    app: catalog
-    app.kubernetes.io/component: catalog
-    app.kubernetes.io/instance: catalog
-    app.kubernetes.io/part-of: catalog
-    app.openshift.io/runtime: rh-spring-boot
-  name: catalog
+    app: datagrid-service
+    app.kubernetes.io/component: datagrid-service
+    app.kubernetes.io/instance: datagrid-service
+    app.kubernetes.io/part-of: cart
+    app.openshift.io/runtime: datagrid
+  name: datagrid-service
   namespace: user3-cloudnativeapps
-  resourceVersion: "2685966"
-  uid: 0effc644-0852-480e-b905-b8900c882d3b
+  resourceVersion: "2395830"
+  uid: 2542baad-f5e2-49e6-bbaf-a2a6fe2939cb
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
-    deploymentconfig: catalog
+    deploymentconfig: datagrid-service
   strategy:
     activeDeadlineSeconds: 21600
     resources: {}
@@ -39,21 +36,31 @@ spec:
         openshift.io/generated-by: OpenShiftNewApp
       creationTimestamp: null
       labels:
-        deploymentconfig: catalog
+        deploymentconfig: datagrid-service
     spec:
       containers:
       - env:
-        - name: JAVA_OPTS_APPEND
-          value: -Dspring.profiles.active=openshift
-        image: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/catalog@sha256:88fd8cfe8bacbd0ebeadaef157cf2b8cff8ccaaecc85fd5bb3cf609090cefe00
-        imagePullPolicy: Always
-        name: catalog
+        - name: PASS
+          value: pass
+        - name: USER
+          value: user
+        image: quay.io/openshiftlabs/ccn-infinispan@sha256:3090e8aaf031c69e48285515fb44e320fe8bfd9a999ee1ff3d3818b8ca71e9c9
+        imagePullPolicy: IfNotPresent
+        name: datagrid-service
         ports:
-        - containerPort: 8443
+        - containerPort: 11221
           protocol: TCP
-        - containerPort: 8778
+        - containerPort: 11222
           protocol: TCP
-        - containerPort: 8080
+        - containerPort: 2157
+          protocol: TCP
+        - containerPort: 46655
+          protocol: TCP
+        - containerPort: 57600
+          protocol: TCP
+        - containerPort: 7800
+          protocol: TCP
+        - containerPort: 7900
           protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
@@ -69,27 +76,27 @@ spec:
   - imageChangeParams:
       automatic: true
       containerNames:
-      - catalog
+      - datagrid-service
       from:
         kind: ImageStreamTag
-        name: catalog:latest
+        name: datagrid-service:12.0.0.Final-1
         namespace: user3-cloudnativeapps
-      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/user3-cloudnativeapps/catalog@sha256:88fd8cfe8bacbd0ebeadaef157cf2b8cff8ccaaecc85fd5bb3cf609090cefe00
+      lastTriggeredImage: quay.io/openshiftlabs/ccn-infinispan@sha256:3090e8aaf031c69e48285515fb44e320fe8bfd9a999ee1ff3d3818b8ca71e9c9
     type: ImageChange
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2022-08-04T20:37:57Z"
-    lastUpdateTime: "2022-08-04T20:38:02Z"
-    message: replication controller "catalog-1" successfully rolled out
-    reason: NewReplicationControllerAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2022-08-05T19:02:25Z"
-    lastUpdateTime: "2022-08-05T19:02:25Z"
+  - lastTransitionTime: "2022-08-04T20:38:05Z"
+    lastUpdateTime: "2022-08-04T20:38:05Z"
     message: Deployment config has minimum availability.
     status: "True"
     type: Available
+  - lastTransitionTime: "2022-08-04T20:38:02Z"
+    lastUpdateTime: "2022-08-04T20:38:06Z"
+    message: replication controller "datagrid-service-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
   details:
     causes:
     - type: ConfigChange
